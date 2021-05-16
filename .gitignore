@@ -1,0 +1,7 @@
+.idea/
+
+/FirstApp/.idea/
+/FirstApp/FirstApp/bin/
+/FirstApp/FirstApp/obj/
+
+*.pdf
