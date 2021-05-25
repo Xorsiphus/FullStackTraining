@@ -7,15 +7,15 @@ namespace FirstApp.Repository
 {
     public class CourseRepository : ICourse
     {
-        private readonly AppDbContext Context;
+        private readonly AppDbContext _context;
 
         public CourseRepository(AppDbContext context) =>
-            Context = context;
+            _context = context;
 
         public IEnumerable<Course> Courses =>
-            Context.Courses.ToList();
+            _context.Courses.ToList();
 
         public Course GetCourse(int id) =>
-            Context.Courses.FirstOrDefault(p => p.CourseId == id);
+            _context.Courses.FirstOrDefault(p => p.CourseId == id);
     }
 }

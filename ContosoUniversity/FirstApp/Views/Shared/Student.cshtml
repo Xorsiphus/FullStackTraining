@@ -1,0 +1,9 @@
+﻿@model FirstApp.Models.Student
+
+<div class="col-lg-4" style="margin-bottom: 20px">
+    <img src="@Model.Avatar" class="img-thumbnail" style="width: 300px; height: 300px" alt="@Model.LastName">
+    <h4>Name: @Model.LastName</h4>
+    <p>FirstMidName: @Model.FirstMidName</p>
+    <p>Count of misses: @Model.Misses</p>
+    <p>Date: @Model.EnrollmentDate.ToLongDateString()</p>
+</div>

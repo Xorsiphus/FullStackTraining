@@ -7,15 +7,15 @@ namespace FirstApp.Repository
 {
     public class EnrollmentRepository : IEnrollment
     {
-        private readonly AppDbContext Context;
+        private readonly AppDbContext _context;
 
         public EnrollmentRepository(AppDbContext context) =>
-            Context = context;
+            _context = context;
 
         public IEnumerable<Enrollment> Enrollments =>
-            Context.Enrollments.ToList();
+            _context.Enrollments.ToList();
 
         public Enrollment GetEnrollment(int id) =>
-            Context.Enrollments.FirstOrDefault(p => p.EnrollmentId == id);
+            _context.Enrollments.FirstOrDefault(p => p.EnrollmentId == id);
     }
 }

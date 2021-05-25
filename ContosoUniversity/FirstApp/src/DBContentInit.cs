@@ -13,14 +13,14 @@ namespace FirstApp
             {
                 var students = new List<Student>
                 {
-                    new Student{FirstMidName="Carson",LastName="Alexander",Avatar = "https://static.wikia.nocookie.net/minecraft_gamepedia/images/a/af/Apple_JE3_BE3.png/revision/latest?cb=20200519232834&format=original",EnrollmentDate=DateTime.Parse("2005-09-01")},
-                    new Student{FirstMidName="Meredith",LastName="Alonso",Avatar = "https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/58/Arrow_JE2_BE1.png/revision/latest?cb=20200105214407&format=original",EnrollmentDate=DateTime.Parse("2002-09-01")},
-                    new Student{FirstMidName="Arturo",LastName="Anand",Avatar = "https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e0/Baked_Potato_JE4_BE2.png/revision/latest?cb=20190430222641&format=original",EnrollmentDate=DateTime.Parse("2003-09-01")},
-                    new Student{FirstMidName="Gytis",LastName="Barzdukas",Avatar = "https://static.wikia.nocookie.net/minecraft_gamepedia/images/1/12/Beetroot_JE2_BE2.png/revision/latest?cb=20190503043121&format=original",EnrollmentDate=DateTime.Parse("2002-09-01")},
-                    new Student{FirstMidName="Yan",LastName="Li",Avatar = "https://static.wikia.nocookie.net/minecraft_gamepedia/images/6/6c/Beetroot_Soup_JE2_BE2.png/revision/latest?cb=20190503043416&format=original",EnrollmentDate=DateTime.Parse("2002-09-01")},
-                    new Student{FirstMidName="Peggy",LastName="Justice",Avatar = "https://static.wikia.nocookie.net/minecraft_gamepedia/images/6/65/Black_Dye_JE1_BE1.png/revision/latest?cb=20181020070746&format=original",EnrollmentDate=DateTime.Parse("2001-09-01")},
-                    new Student{FirstMidName="Laura",LastName="Norman",Avatar = "https://static.wikia.nocookie.net/minecraft_gamepedia/images/2/2e/Blue_Dye_JE1_BE1.png/revision/latest?cb=20181020041944&format=original",EnrollmentDate=DateTime.Parse("2003-09-01")},
-                    new Student{FirstMidName="Nino",LastName="Olivetto",Avatar = "https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/3a/Bone_JE3_BE2.png/revision/latest?cb=20190501043304&format=original",EnrollmentDate=DateTime.Parse("2005-09-01")}
+                    new Student{FirstMidName="Carson",LastName="Alexander",Avatar = "https://static.wikia.nocookie.net/minecraft_gamepedia/images/a/af/Apple_JE3_BE3.png/revision/latest?cb=20200519232834&format=original",Misses = 5,EnrollmentDate=DateTime.Parse("2005-09-01")},
+                    new Student{FirstMidName="Meredith",LastName="Alonso",Avatar = "https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/58/Arrow_JE2_BE1.png/revision/latest?cb=20200105214407&format=original",Misses = 2,EnrollmentDate=DateTime.Parse("2002-09-01")},
+                    new Student{FirstMidName="Arturo",LastName="Anand",Avatar = "https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e0/Baked_Potato_JE4_BE2.png/revision/latest?cb=20190430222641&format=original",Misses = 7,EnrollmentDate=DateTime.Parse("2003-09-01")},
+                    new Student{FirstMidName="Gytis",LastName="Barzdukas",Avatar = "https://static.wikia.nocookie.net/minecraft_gamepedia/images/1/12/Beetroot_JE2_BE2.png/revision/latest?cb=20190503043121&format=original",Misses = 1,EnrollmentDate=DateTime.Parse("2002-09-01")},
+                    new Student{FirstMidName="Yan",LastName="Li",Avatar = "https://static.wikia.nocookie.net/minecraft_gamepedia/images/6/6c/Beetroot_Soup_JE2_BE2.png/revision/latest?cb=20190503043416&format=original",Misses = 111,EnrollmentDate=DateTime.Parse("2002-09-01")},
+                    new Student{FirstMidName="Peggy",LastName="Justice",Avatar = "https://static.wikia.nocookie.net/minecraft_gamepedia/images/6/65/Black_Dye_JE1_BE1.png/revision/latest?cb=20181020070746&format=original",Misses = 2,EnrollmentDate=DateTime.Parse("2001-09-01")},
+                    new Student{FirstMidName="Laura",LastName="Norman",Avatar = "https://static.wikia.nocookie.net/minecraft_gamepedia/images/2/2e/Blue_Dye_JE1_BE1.png/revision/latest?cb=20181020041944&format=original",Misses = 666,EnrollmentDate=DateTime.Parse("2003-09-01")},
+                    new Student{FirstMidName="Nino",LastName="Olivetto",Avatar = "https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/3a/Bone_JE3_BE2.png/revision/latest?cb=20190501043304&format=original",Misses = 123,EnrollmentDate=DateTime.Parse("2005-09-01")}
                 };
                 
                 students.ForEach(s => context.Students.Add(s));

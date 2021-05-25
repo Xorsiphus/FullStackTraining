@@ -15,7 +15,10 @@ namespace FirstApp.Models
 
         [Required] public string Avatar { get; set; }
         public string FirstMidName { get; set; }
-        
+
+        [Required] 
+        public int Misses { get; set; }
+
         [Required]
         public DateTime EnrollmentDate { get; set; }
     }
