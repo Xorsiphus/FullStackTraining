@@ -1,7 +1,11 @@
 .idea/
 
-/FirstApp/.idea/
-/FirstApp/FirstApp/bin/
-/FirstApp/FirstApp/obj/
+/ContosoUniversity/.idea/
+
+/ContosoUniversity/FirstApp/bin/
+/ContosoUniversity/FirstApp/obj/
+
+/ContosoUniversity/ContosoUniversity/bin/
+/ContosoUniversity/ContosoUniversity/obj/
 
 *.pdf
