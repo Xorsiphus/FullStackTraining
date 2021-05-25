@@ -1,6 +1,4 @@
-﻿using System;
-using FirstApp.Mocks;
-using FirstApp.Models;
+﻿using FirstApp.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FirstApp
@@ -14,16 +12,5 @@ namespace FirstApp
         public DbSet<Student> Students { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<Course> Courses { get; set; }
-        
-        // protected override void OnModelCreating(ModelBuilder modelBuilder)
-        // {
-        //
-        //     // modelBuilder.Entity<Course>().ToTable("Course");
-        //     // modelBuilder.Entity<Enrollment>().ToTable("Enrollment");
-        //     // modelBuilder.Entity<Student>().ToTable("Student");
-        //     //
-        //     // base.OnModelCreating(modelBuilder);
-        //     
-        // }
     }
 }

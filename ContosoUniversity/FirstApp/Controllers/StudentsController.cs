@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FirstApp.Controllers
 {
-    [Route("test/[controller]")]
+    [Route("[controller]")]
     public class StudentsController : Controller
     {
         private readonly AppDbContext Context;

@@ -1,12 +1,7 @@
-using System;
-using FirstApp.Controllers;
 using FirstApp.DAO;
-using FirstApp.Mocks;
 using FirstApp.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,8 +18,6 @@ namespace FirstApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddTransient<IItems, MockItems>();
-            services.AddTransient<IItemsCategory, MockCategory>();
             services.AddTransient<IStudent, StudentRepository>();
             services.AddTransient<IEnrollment, EnrollmentRepository>();
             services.AddTransient<ICourse, CourseRepository>();

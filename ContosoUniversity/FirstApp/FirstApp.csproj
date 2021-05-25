@@ -21,4 +21,8 @@
       <Folder Include="wwwroot\img" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Items\Resolver.cshtml" />
+    </ItemGroup>
+
 </Project>
