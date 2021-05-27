@@ -63,7 +63,7 @@ namespace FirstApp
             app.UseMvc(routes =>
             {
                 routes.MapRoute(name: "default", template: "{controller=Students}/{action=Resolver}");
-                routes.MapRoute(name: "Cart", template: "{controller=StudentsCart}/{action=AddToCart}/{id?}");
+                routes.MapRoute(name: "Cart", template: "{controller=StudentsCart}/{action}/{id?}");
             });
         }
     }

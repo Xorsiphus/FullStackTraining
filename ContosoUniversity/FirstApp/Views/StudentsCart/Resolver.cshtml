@@ -1,7 +1,8 @@
-﻿@model FirstApp.Models.StudentsCart
+﻿@model FirstApp.ViewModels.StudentsCartViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 <div class="row mt-2">
-    @foreach (var s in Model.StudentList)
+    @foreach (var s in Model.StudentsCart.StudentList)
     {
         @await Html.PartialAsync("StudentForExpulsion", s.Student)
     }
@@ -9,9 +10,19 @@
 </div>
 <div class="row">
     <div class="col-lg-1">
-        <div class="btn btn-success" asp-controller="Order">Очистить</div>
+        <a class="btn btn-success"
+           asp-controller="StudentsCart"
+           asp-action="ClearCart">
+            Очистить
+        </a>
     </div>
-    <div class="col-lg-10"></div>
+    <div class="col-lg-1"></div>
+    <div class="col-lg-2">
+        <p>
+            Сумма: @Model.SummaryMisses
+        </p>
+    </div>
+    <div class="col-lg-7"></div>
     <div class="col-lg-1">
         <a class="btn btn-danger"
            href="/">

@@ -1,11 +1,13 @@
 ﻿@using FirstApp.Models
-@model IEnumerable<FirstApp.Models.Student>
+@using FirstApp.ViewModels
+@model  StudentsListViewModel
 
 <div class="row">
-    <div class="col-lg-11">
+    <div class="col-lg-3">
         <h1>All students:</h1>
     </div>
-    <div class="col-lg-1">
+    <div class="col-lg-8"></div>
+    <div class="col-lg-1 mt-2">
         <a class="btn btn-success"
            href="/Cart">
             Корзина
@@ -14,7 +16,7 @@
 </div>
 <div class="row mt-2">
     @{
-        foreach (Student item in Model)
+        foreach (Student item in Model.Students)
         {
             @await Html.PartialAsync("Student", item)
         }

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FirstApp.Models
@@ -16,8 +16,6 @@ namespace FirstApp.Models
 
         private string CartId { get; set; }
         public List<StudentForExpulsion> StudentList { get; set; }
-        
-        // public int GetCartId { set; get; }
 
         public static StudentsCart GetStudentsCart(IServiceProvider services)
         {
@@ -39,15 +37,14 @@ namespace FirstApp.Models
             _context.SaveChanges();
         }
 
+        public void Clear()
+        {
+            _context.StudentsForExpulsion.RemoveRange(GetStudentsForExpulsion());
+            _context.SaveChanges();
+        }
+
         public List<StudentForExpulsion> GetStudentsForExpulsion()
         {
-            var temp = _context.StudentsForExpulsion.Where(p => p.CartId == CartId)
-                .Include(s => s.Student).ToList();
-                // .Where(p => p.CartId == CartId);
-            foreach (var t in temp)
-            {
-                Console.WriteLine(t.Student);
-            }
             return _context.StudentsForExpulsion
                 .Where(p => p.CartId == CartId)
                 .Include(s => s.Student).ToList();

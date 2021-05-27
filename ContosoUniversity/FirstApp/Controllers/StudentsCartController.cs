@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using FirstApp.DAO;
 using FirstApp.Models;
+using FirstApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FirstApp.Controllers
@@ -21,7 +22,14 @@ namespace FirstApp.Controllers
         {
             var items = _studentsCart.GetStudentsForExpulsion();
             _studentsCart.StudentList = items;
-            return View(_studentsCart);
+            StudentsCartViewModel transfer = new StudentsCartViewModel
+            {
+                StudentsCart = _studentsCart,
+                SummaryMisses = _studentsCart.StudentList
+                    .ConvertAll(s => s.Misses)
+                    .Aggregate(0, (cur, next) => cur + next)
+            };
+            return View(transfer);
         }
 
         public RedirectToActionResult AddToCart(int id)
@@ -33,6 +41,13 @@ namespace FirstApp.Controllers
             }
 
             return RedirectToAction("Resolver");
+        }
+
+        public RedirectToActionResult ClearCart()
+        {
+            _studentsCart.Clear();
+            
+            return RedirectToAction("Resolver", "Students");
         }
     }
 }

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using FirstApp.Models;
-using FirstApp.Repository;
+﻿using System.Linq;
+using FirstApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FirstApp.Controllers
@@ -11,17 +8,32 @@ namespace FirstApp.Controllers
     public class StudentsController : Controller
     {
         private readonly AppDbContext Context;
-        // private readonly StudentRepository _studentRepository;
 
-        public StudentsController(AppDbContext context) => 
+        public StudentsController(AppDbContext context) =>
             Context = context;
 
         public ViewResult Resolver()
         {
             ViewData["Title"] = "Students";
-            IEnumerable<Student> transfer = Context.Students.ToList();
+            
+            StudentsListViewModel transfer = new StudentsListViewModel
+            {
+                Students = Context.Students.ToList(),
+                Courses = Context.Courses
+                    .ToList()
+                    .ConvertAll(c => c.Title)
+                    .Distinct()
+            };
+            
             return View(transfer);
         }
+
+        // public RedirectToActionResult GroupByCourse(string course)
+        // {
+        //     
+        //     
+        //     return RedirectToAction("Resolver");
+        // }
     }
 }
 

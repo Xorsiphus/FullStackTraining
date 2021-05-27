@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace FirstApp.Models
 {
+    [Index("StudentId", IsUnique = false)]
     public class StudentForExpulsion
     {
         [Key] 
@@ -16,6 +18,7 @@ namespace FirstApp.Models
         [Required] 
         public int Misses { get; set;  }
         
+        [ForeignKey("StudentId")]
         public Student Student { get; set; }
     }
 }
