@@ -1,0 +1,21 @@
+﻿@model FirstApp.Models.StudentsCart
+
+<div class="row mt-2">
+    @foreach (var s in Model.StudentList)
+    {
+        @await Html.PartialAsync("StudentForExpulsion", s.Student)
+    }
+    <hr/>
+</div>
+<div class="row">
+    <div class="col-lg-1">
+        <div class="btn btn-success" asp-controller="Order">Очистить</div>
+    </div>
+    <div class="col-lg-10"></div>
+    <div class="col-lg-1">
+        <a class="btn btn-danger"
+           href="/">
+            Назад
+        </a>
+    </div>
+</div>

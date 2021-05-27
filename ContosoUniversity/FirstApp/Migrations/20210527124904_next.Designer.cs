@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FirstApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210525145154_initial")]
-    partial class initial
+    [Migration("20210527124904_next")]
+    partial class next
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -56,12 +56,16 @@ namespace FirstApp.Migrations
 
                     b.HasKey("EnrollmentId");
 
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("StudentId");
+
                     b.ToTable("Enrollments");
                 });
 
             modelBuilder.Entity("FirstApp.Models.Student", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -80,9 +84,76 @@ namespace FirstApp.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("id");
+                    b.Property<int>("Misses")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("FirstApp.Models.StudentForExpulsion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("CartId")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Misses")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId")
+                        .IsUnique();
+
+                    b.ToTable("StudentsForExpulsion");
+                });
+
+            modelBuilder.Entity("FirstApp.Models.Enrollment", b =>
+                {
+                    b.HasOne("FirstApp.Models.Course", "Course")
+                        .WithMany("Enrollments")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FirstApp.Models.Student", "Student")
+                        .WithMany("Enrollments")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("FirstApp.Models.StudentForExpulsion", b =>
+                {
+                    b.HasOne("FirstApp.Models.Student", "Student")
+                        .WithOne()
+                        .HasForeignKey("FirstApp.Models.StudentForExpulsion", "StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("FirstApp.Models.Course", b =>
+                {
+                    b.Navigation("Enrollments");
+                });
+
+            modelBuilder.Entity("FirstApp.Models.Student", b =>
+                {
+                    b.Navigation("Enrollments");
                 });
 #pragma warning restore 612, 618
         }

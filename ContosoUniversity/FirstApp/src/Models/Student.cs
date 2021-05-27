@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,7 +9,7 @@ namespace FirstApp.Models
     public class Student
     {
         [Key]
-        public int id { get; set; }
+        public int Id { get; set; }
         
         [Required]
         public string LastName { get; set; }
@@ -21,5 +22,7 @@ namespace FirstApp.Models
 
         [Required]
         public DateTime EnrollmentDate { get; set; }
+        
+        public ICollection<Enrollment> Enrollments { get; set; }
     }
 }

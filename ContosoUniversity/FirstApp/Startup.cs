@@ -1,7 +1,10 @@
 using FirstApp.DAO;
+using FirstApp.Models;
 using FirstApp.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,15 +20,20 @@ namespace FirstApp
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped(StudentsCart.GetStudentsCart);
+            
             services.AddTransient<IStudent, StudentRepository>();
             services.AddTransient<IEnrollment, EnrollmentRepository>();
             services.AddTransient<ICourse, CourseRepository>();
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
-                options.EnableSensitiveDataLogging();
             });
+            
+            services.AddMvc();
+            services.AddMemoryCache();
+            services.AddSession();
             
             services.AddControllersWithViews(mvcOtions=>
             {
@@ -41,20 +49,22 @@ namespace FirstApp
             app.UseStatusCodePages();
 
             app.UseStaticFiles();
+
+            app.UseSession();
             
             app.UseRouting();
 
-            app.UseMvcWithDefaultRoute();
+            // app.UseMvcWithDefaultRoute();
 
             using var scope = app.ApplicationServices.CreateScope();
             AppDbContext context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
             DBContentInit.Initial(context);
 
-            // app.UseEndpoints(endpoints =>
-            //            {
-            //     endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World!"); });
-            //     
-            // });
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(name: "default", template: "{controller=Students}/{action=Resolver}");
+                routes.MapRoute(name: "Cart", template: "{controller=StudentsCart}/{action=AddToCart}/{id?}");
+            });
         }
     }
 }

@@ -16,6 +16,6 @@ namespace FirstApp.Repository
             _context.Students.ToList();
 
         public Student GetStudent(int id) =>
-            _context.Students.FirstOrDefault(p => p.id == id);
+            _context.Students.FirstOrDefault(p => p.Id == id);
     }
 }
