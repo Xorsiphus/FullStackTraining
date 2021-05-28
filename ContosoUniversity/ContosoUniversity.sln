@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FirstApp", "FirstApp\FirstA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoUniversity", "ContosoUniversity\ContosoUniversity.csproj", "{F0B1263B-9D8C-43B4-9065-76EBC381A06F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASP.NETCoreApi", "ASP.NETCoreApi\ASP.NETCoreApi.csproj", "{D5F92887-36B6-4BCB-8973-4223C0D9EA88}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{F0B1263B-9D8C-43B4-9065-76EBC381A06F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F0B1263B-9D8C-43B4-9065-76EBC381A06F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F0B1263B-9D8C-43B4-9065-76EBC381A06F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5F92887-36B6-4BCB-8973-4223C0D9EA88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5F92887-36B6-4BCB-8973-4223C0D9EA88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5F92887-36B6-4BCB-8973-4223C0D9EA88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5F92887-36B6-4BCB-8973-4223C0D9EA88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

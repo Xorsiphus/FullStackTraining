@@ -2,12 +2,18 @@
 
 /ContosoUniversity/.idea/
 
+
+/ContosoUniversity/ASP.NETCoreApi/bin/
+/ContosoUniversity/ASP.NETCoreApi/obj/
+/ContosoUniversity/ASP.NETCoreApi/obj/
+
 /ContosoUniversity/FirstApp/bin/
 /ContosoUniversity/FirstApp/obj/
+/ContosoUniversity/FirstApp/wwwroot/
 
 /ContosoUniversity/ContosoUniversity/bin/
 /ContosoUniversity/ContosoUniversity/obj/
-/ContosoUniversity/FirstApp/wwwroot/
+/ContosoUniversity/ContosoUniversity/obj/
 
 
 *.pdf
