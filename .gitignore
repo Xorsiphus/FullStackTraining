@@ -3,16 +3,11 @@
 /ContosoUniversity/.idea/
 
 
-/ContosoUniversity/ASP.NETCoreApi/bin/
-/ContosoUniversity/ASP.NETCoreApi/obj/
+/FullStackTraining/ASP.NETCoreApi/bin/
+/FullStackTraining/ASP.NETCoreApi/obj/
 
-/ContosoUniversity/FirstApp/bin/
-/ContosoUniversity/FirstApp/obj/
-/ContosoUniversity/FirstApp/wwwroot/
-
-/ContosoUniversity/ContosoUniversity/bin/
-/ContosoUniversity/ContosoUniversity/obj/
-/ContosoUniversity/ContosoUniversity/wwwroot/
+/FullStackTraining/FirstApp/bin/
+/FullStackTraining/FirstApp/obj/
 
 
 *.pdf

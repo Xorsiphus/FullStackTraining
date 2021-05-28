@@ -3,10 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using ASP.NETCoreApi.Data;
 using ASP.NETCoreApi.Data.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Primitives;
 
 namespace ASP.NETCoreApi.Controllers
 {
