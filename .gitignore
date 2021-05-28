@@ -5,7 +5,6 @@
 
 /ContosoUniversity/ASP.NETCoreApi/bin/
 /ContosoUniversity/ASP.NETCoreApi/obj/
-/ContosoUniversity/ASP.NETCoreApi/obj/
 
 /ContosoUniversity/FirstApp/bin/
 /ContosoUniversity/FirstApp/obj/
@@ -13,7 +12,7 @@
 
 /ContosoUniversity/ContosoUniversity/bin/
 /ContosoUniversity/ContosoUniversity/obj/
-/ContosoUniversity/ContosoUniversity/obj/
+/ContosoUniversity/ContosoUniversity/wwwroot/
 
 
 *.pdf
