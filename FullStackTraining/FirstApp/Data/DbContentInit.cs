@@ -5,7 +5,7 @@ using FirstApp.Models;
 
 namespace FirstApp
 {
-    public class DBContentInit
+    public static class DbContentInit
     {
         public static void Initial(AppDbContext context)
         {

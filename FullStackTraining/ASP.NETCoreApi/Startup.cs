@@ -24,7 +24,6 @@ namespace ASP.NETCoreApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddCors();
             services.AddTransient<IStudent, StudentRepository>();
             services.AddTransient<IEnrollment, EnrollmentRepository>();
             services.AddTransient<ICourse, CourseRepository>();
@@ -47,14 +46,16 @@ namespace ASP.NETCoreApi
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ASP.NETCoreApi v1"));
             }
-            
-            app.UseCors(builder => builder.AllowAnyOrigin());
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseAuthorization();
+            
+            using var scope = app.ApplicationServices.CreateScope();
+            AppDbContext context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            DbContentInit.Initial(context);
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }

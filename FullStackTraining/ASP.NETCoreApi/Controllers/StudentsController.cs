@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using ASP.NETCoreApi.Data;
 using ASP.NETCoreApi.Data.Models;
+using ASP.NETCoreApi.Data.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace ASP.NETCoreApi.Controllers
 {
@@ -12,10 +11,11 @@ namespace ASP.NETCoreApi.Controllers
     [Route("[controller]")]
     public class StudentsController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly StudentRepository _studentRepository;
 
         public StudentsController(AppDbContext context) =>
-            _context = context;
+            _studentRepository = new StudentRepository(context);
+
 
         private StatusCodeResult CheckEntity(Student s)
         {
@@ -23,28 +23,28 @@ namespace ASP.NETCoreApi.Controllers
             {
                 return BadRequest();
             }
-            
-            if (_context.Students.Any(cs => cs.Id != s.Id))
+
+            if (_studentRepository.CheckStudentById(s.Id))
             {
                 return NotFound();
             }
 
             return Ok();
         }
-        
+
         private StatusCodeResult CheckEntity(Student s, int id)
         {
             if (s == null)
             {
                 return BadRequest();
             }
-            
+
             if (s.Id != id)
             {
                 return BadRequest();
             }
-            
-            if (_context.Students.Any(cs => cs.Id == s.Id))
+
+            if (_studentRepository.CheckStudentById(s.Id))
             {
                 return Ok();
             }
@@ -53,78 +53,73 @@ namespace ASP.NETCoreApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Student>>> GetStudents() =>
-            await _context.Students.ToListAsync();
-        
+        public async Task<ActionResult<IEnumerable<Student>>> HttpGetStudents() =>
+            await _studentRepository.GetStudents();
+
         [HttpGet]
         [Route("{id:int}")]
         public async Task<ActionResult<Student>> GetStudentById(int id) =>
-            await _context.Students.FirstOrDefaultAsync(s => s.Id == id);
-        
+            await _studentRepository.GetStudentById(id);
+
         [HttpPost]
         public async Task<ActionResult<Student>> AddStudent(Student s)
         {
             var status = CheckEntity(s);
-        
+
             if (CheckEntity(s).GetType() == typeof(OkResult))
                 return status;
-        
-            _context.Students.Add(s);
-            await _context.SaveChangesAsync();
+
+            await _studentRepository.AddStudent(s);
             return Ok(s);
         }
-        
+
         [HttpDelete]
         [Route("{id:int}")]
         public async Task<ActionResult<Student>> DeleteStudentById(int id)
         {
-            if (_context.Students.Any(cs => cs.Id != id))
+            if (_studentRepository.CheckStudentById(id))
             {
                 return NotFound();
             }
-            
-            _context.Students
-                .Remove(new Student {Id = id});
-            await _context.SaveChangesAsync();
+
+            await _studentRepository.DeleteStudent(id);
             return Ok("Removed student with Id = " + id);
         }
-        
+
         [HttpPatch]
         [Route("{id:int}")]
-        public async Task<ActionResult<Student>> UpdateStudentByIdWithPatch(int id, Student s)
+        public async Task<ActionResult<Student>> UpdateStudentByIdWithPatch(Student s, int id)
         {
             var status = CheckEntity(s, id);
-            
+
             if (CheckEntity(s).GetType() == typeof(OkResult))
                 return status;
-            
-            var updated = _context.Update(s).Entity;
-            await _context.SaveChangesAsync();
-            return Ok(updated);
+
+            await _studentRepository.UpdateStudent(s);
+            return Ok(s);
         }
-        
+
         [HttpPut]
         [Route("{id:int}")]
         public async Task<ActionResult<Student>> UpdateStudentByIdWithPut(Student s, int id)
         {
             var status = CheckEntity(s, id);
-        
+
             if (CheckEntity(s).GetType() == typeof(OkResult))
                 return status;
-            
-            var updated = _context.Students.Update(s);
-            await _context.SaveChangesAsync();
-            return Ok(updated);
+
+            await _studentRepository.UpdateStudent(s);
+            return Ok(s);
         }
-        
+
         [HttpHead]
         public async Task<ActionResult<IEnumerable<Student>>> HeadStudents() =>
-            await _context.Students.ToListAsync();
-        
+            await _studentRepository.GetStudents();
+
         [HttpHead]
         [Route("{id:int}")]
         public async Task<ActionResult<Student>> HeadStudentById(int id) =>
-            await _context.Students.FirstOrDefaultAsync(s => s.Id == id);
+            await _studentRepository.GetStudentById(id);
 
 //         [HttpOptions]
 // #pragma warning disable 1998

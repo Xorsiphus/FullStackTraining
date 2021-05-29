@@ -5,7 +5,7 @@ using ASP.NETCoreApi.Data.Models;
 
 namespace ASP.NETCoreApi.Data
 {
-    public class DbContentInit
+    public static class DbContentInit
     {
         public static void Initial(AppDbContext context)
         {

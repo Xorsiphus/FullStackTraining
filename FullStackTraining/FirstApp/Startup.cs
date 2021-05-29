@@ -57,7 +57,7 @@ namespace FirstApp
 
             using var scope = app.ApplicationServices.CreateScope();
             AppDbContext context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            DBContentInit.Initial(context);
+            DbContentInit.Initial(context);
 
             app.UseMvc(routes =>
             {
