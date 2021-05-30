@@ -34,15 +34,15 @@ const CartPage = () => {
 
     return (
         <Container>
-            <Row>
-                <Col xs={10}>
-                    <div className="mt-2">
+            <Row className="mt-1">
+                <Col className="col-md-10">
+                    <div>
                         <h1 className="header">Cart:</h1>
                     </div>
                 </Col>
-                <Col xs={2}>
+                <Col className="col-md-2 mt-2">
                     <div>
-                        <Link to="/" className="btn btn-danger mt-3">Back</Link>
+                        <Link to="/" className="btn btn-danger">Back</Link>
                     </div>
                 </Col>
 
@@ -53,10 +53,10 @@ const CartPage = () => {
             </Row>
             <hr />
             <Row>
-                <Col xs={10}>
+                <Col className="col-md-10 mt-2">
                     <p>Общее число пропусков: {calculateMisses()}</p>
                 </Col>
-                <Col xs={2}>
+                <Col className="col-md-2 mb-3">
                     <Button className="btn btn-dark" onClick={() => kickStudents()}>Исключить</Button>
                 </Col>
             </Row>

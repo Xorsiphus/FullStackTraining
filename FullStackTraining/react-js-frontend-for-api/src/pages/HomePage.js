@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Student from '../components/Student';
-import { getStudents } from '../api/apiRequests';
+import {
+  getStudents,
+  getCourses
+} from '../api/apiRequests';
 import cart from "../components/Cart";
 
 import {
@@ -19,14 +22,15 @@ const HomePage = () => {
   useEffect(() => {
     async function getData() {
       const s = await getStudents();
-      console.log(s);
       setStudents(s);
     }
     getData();
   }, []);
 
-  const addStudentToCart = (student) => {
-    cart.dispatch({type: "Add", student});
+  const addStudentToCart = async (student) => {
+    cart.dispatch({ type: "Add", student });
+    const s = await getCourses();
+    console.log(s);
   }
 
   const studentsList = students.map((s) => (

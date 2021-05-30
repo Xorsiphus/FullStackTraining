@@ -1,6 +1,6 @@
 import axios from "./axiosClient";
 
-function studentParser(s){
+function studentParser(s) {
     return {
         id: s.id,
         lastName: s.lastName,
@@ -18,6 +18,10 @@ export async function getStudents() {
 
 export async function getStudentById(id) {
     const student = await axios.get('/Students/' + id).then((res) => res.data);
-    console.log(student);
     return studentParser(student);
+}
+
+export async function getCourses() {
+    const courses = await axios.get('/Courses').then((res) => res.data);
+    return courses;
 }
