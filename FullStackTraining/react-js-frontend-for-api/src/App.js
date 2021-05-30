@@ -10,17 +10,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import HomePage from './pages/HomePage';
 import CartPage from './pages/CartPage';
 
-const App = () => (
-  <Router>
-    <Switch>
-      <Route path="/Cart">
-        <CartPage />
-      </Route>
-      <Route path="/">
-        <HomePage />
-      </Route>
-    </Switch>
-  </Router>
-);
+const App = () => {
+  return (
+    <Router>
+      <Switch>
+        <Route path="/Cart">
+          <CartPage test={"some text"} />
+        </Route>
+        <Route path="/">
+          <HomePage />
+        </Route>
+      </Switch>
+    </Router>
+  )
+};
 
 export default App;

@@ -1,43 +1,60 @@
-import React, { useState } from 'react';
-import { getStudents } from '../api/apiRequests';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Student from '../components/Student';
+import { getStudents } from '../api/apiRequests';
+import cart from "../components/Cart";
 
 import {
-  Button,
   Container,
   Col,
   Row
 } from 'react-bootstrap';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const HomePage = () => {
+
+  const [students, setStudents] = useState([]);
+
+  useEffect(() => {
+    async function getData() {
+      const s = await getStudents();
+      console.log(s);
+      setStudents(s);
+    }
+    getData();
+  }, []);
+
+  const addStudentToCart = (student) => {
+    cart.dispatch({type: "Add", student});
+  }
+
+  const studentsList = students.map((s) => (
+    <Student
+      key={s.id}
+      student={s}
+      buttonListener={addStudentToCart}
+    />
+  ));
 
   return (
     <Container>
       <Row>
         <Col xs={10}>
-          <div className="m-2">
+          <div className="mt-3">
             <h1 className="header">All students:</h1>
           </div>
         </Col>
         <Col xs={2}>
-          <div className="m-2">
-            <Link to="/Cart" className="btn btn-success">Cart</Link>
+          <div className="mt-2">
+            <Link to="/Cart" className="btn btn-success mt-3">Cart</Link>
           </div>
         </Col>
 
       </Row>
       <hr />
-
       <Row>
-        <Col xs={10}>
-          <h1 className="header">All students:</h1>
-        </Col>
-        <Col xs={2}>
-          {/* <Link to="/Cart" className="btn btn-success mt-2">Cart</Link> */}
-          <Button className="btn btn-success mt-2" onClick={getStudents}>Test axios</Button>
-        </Col>
+        {studentsList}
       </Row>
 
     </Container>
