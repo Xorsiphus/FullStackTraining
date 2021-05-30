@@ -24,6 +24,11 @@ namespace ASP.NETCoreApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors(options =>
+            {
+                // options.AddPolicy("AllowAnyOrigin", builder => builder.AllowAnyOrigin());
+                options.AddPolicy("AllowMyFront", builder => builder.WithOrigins("http://localhost:3000"));
+            });
             services.AddTransient<IStudent, StudentRepository>();
             services.AddTransient<IEnrollment, EnrollmentRepository>();
             services.AddTransient<ICourse, CourseRepository>();
@@ -52,12 +57,17 @@ namespace ASP.NETCoreApi
             app.UseRouting();
 
             app.UseAuthorization();
-            
+
+            app.UseCors();
+
             using var scope = app.ApplicationServices.CreateScope();
             AppDbContext context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
             DbContentInit.Initial(context);
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers().RequireCors("AllowMyFront");
+            });
         }
     }
 }
