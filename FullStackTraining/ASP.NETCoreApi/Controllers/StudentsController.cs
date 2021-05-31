@@ -53,8 +53,18 @@ namespace ASP.NETCoreApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Student>>> HttpGetStudents() =>
-            await _studentRepository.GetStudents();
+        public async Task<ActionResult<IEnumerable<Student>>> GetStudents(string course)
+        {
+            if (course != null)
+            {
+                return await _studentRepository.GetStudentsByCourse(course);
+            }
+            else
+            {
+                return await _studentRepository.GetStudents();
+            }
+        }
+
 
         [HttpGet]
         [Route("{id:int}")]

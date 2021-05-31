@@ -15,9 +15,9 @@ namespace ASP.NETCoreApi.Controllers
 
         public CoursesController(AppDbContext context) =>
             _courseRepository = new CourseRepository(context);
-        
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Course>>> HttpGetStudents() =>
+        public async Task<ActionResult<IEnumerable<Course>>> HttpGetCourses() =>
             await _courseRepository.GetCourses();
     }
 }

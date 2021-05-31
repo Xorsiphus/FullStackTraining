@@ -26,8 +26,8 @@ namespace ASP.NETCoreApi
             services.AddControllers();
             services.AddCors(options =>
             {
-                // options.AddPolicy("AllowAnyOrigin", builder => builder.AllowAnyOrigin());
-                options.AddPolicy("AllowMyFront", builder => builder.WithOrigins("http://localhost:3000"));
+                options.AddPolicy("AllowMyFront", builder => builder.AllowAnyOrigin());
+                // options.AddPolicy("AllowMyFront", builder => builder.WithOrigins("http://localhost:3000"));
             });
             services.AddTransient<IStudent, StudentRepository>();
             services.AddTransient<IEnrollment, EnrollmentRepository>();

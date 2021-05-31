@@ -5,7 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Student from '../components/Student';
 import {
   getStudents,
-  getUniqueCourses
+  getUniqueCourses,
+  getStudentsByCourse
 } from '../api/apiRequests';
 import cart from "../components/Cart";
 
@@ -20,7 +21,6 @@ import {
 const HomePage = () => {
 
   const [students, setStudents] = useState([]);
-  const [selectedOption, setSelectedOption] = useState(null);
 
   useEffect(() => {
     async function getData() {
@@ -62,12 +62,12 @@ const HomePage = () => {
   const selectSubscribe = async (props) => {
     const s = await getStudents();
     if (props) {
-      // props.value;
+      const newStudents = await getStudentsByCourse(props.value);
+      setStudents(newStudents);
     }
     else {
       setStudents(s);
     }
-    console.log(props);
   };
 
   return (

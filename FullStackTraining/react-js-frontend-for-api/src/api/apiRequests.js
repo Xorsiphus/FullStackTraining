@@ -37,3 +37,16 @@ export async function getUniqueCourses() {
         .then((res) => res.data);
     return courses.map(c => c.title).filter(onlyUnique);
 }
+
+export async function getStudentsByCourse(course) {
+    const students = axios
+        .get(
+            '/Students',
+            {
+                params: { course: course },
+            })
+        .then((res) => res.data);
+    return students;
+}
+
+
