@@ -13,9 +13,9 @@ function studentParser(s) {
     }
 }
 
-function onlyUnique(value, index, self) {
-    return self.indexOf(value) === index;
-}
+// function onlyUnique(value, index, self) {
+//     return self.indexOf(value) === index;
+// }
 
 export async function getStudents() {
     const students = await axios
@@ -35,18 +35,19 @@ export async function getUniqueCourses() {
     const courses = await axios
         .get('/Courses')
         .then((res) => res.data);
-    return courses.map(c => c.title).filter(onlyUnique);
+    // return courses.map(c => c.title).filter(onlyUnique);
+    return courses.map(c => ({ title: c.title, id: c.courseId }));;
 }
 
 export async function getStudentsByCourse(course) {
-    const students = axios
+    const students = await axios
         .get(
             '/Students',
             {
                 params: { course: course },
             })
         .then((res) => res.data);
-    return students;
+    return students.map((s) => studentParser(s));
 }
 
 
