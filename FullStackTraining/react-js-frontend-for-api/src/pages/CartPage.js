@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import cart from "../components/Cart";
 import Student from '../components/Student';
 
 import {
     Button,
     Container,
+    CardColumns,
     Col,
     Row
 } from 'react-bootstrap';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Link } from 'react-router-dom';
+
 
 const CartPage = () => {
 
@@ -26,8 +28,8 @@ const CartPage = () => {
     const calculateMisses = () =>
         <>{studentsFromCart.reduce((a, curr) => a + curr.misses, 0)}</>;
 
-    const kickStudents = () => {
-        cart.dispatch({type: "Clear"});
+    const kickStudents = async () => {
+        await cart.dispatch({ type: "Clear" });
         setStudentsFromCart([]);
     };
 
@@ -48,16 +50,20 @@ const CartPage = () => {
 
             </Row>
             <hr />
-            <Row>
+            <CardColumns>
                 {cartStudentsList}
-            </Row>
+            </CardColumns>
             <hr />
             <Row>
                 <Col className="col-md-10 mt-2">
                     <p>Общее число пропусков: {calculateMisses()}</p>
                 </Col>
                 <Col className="col-md-2 mb-3">
-                    <Button className="btn btn-dark" onClick={() => kickStudents()}>Исключить</Button>
+                    <Button
+                        className="btn btn-dark"
+                        onClick={() => kickStudents()}>
+                        Исключить
+                    </Button>
                 </Col>
             </Row>
         </Container>

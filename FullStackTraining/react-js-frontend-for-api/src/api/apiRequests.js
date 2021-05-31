@@ -7,21 +7,33 @@ function studentParser(s) {
         firstMidName: s.firstMidName,
         avatar: s.avatar,
         misses: s.misses,
-        enrollmentDate: s.enrollmentDate.substring(0, s.enrollmentDate.indexOf('T')),
+        enrollmentDate: s
+            .enrollmentDate
+            .substring(0, s.enrollmentDate.indexOf('T')),
     }
 }
 
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+}
+
 export async function getStudents() {
-    const students = await axios.get('/Students').then((res) => res.data);
+    const students = await axios
+        .get('/Students')
+        .then((res) => res.data);
     return students.map((s) => studentParser(s));
 }
 
 export async function getStudentById(id) {
-    const student = await axios.get('/Students/' + id).then((res) => res.data);
+    const student = await axios
+        .get('/Students/' + id)
+        .then((res) => res.data);
     return studentParser(student);
 }
 
-export async function getCourses() {
-    const courses = await axios.get('/Courses').then((res) => res.data);
-    return courses;
+export async function getUniqueCourses() {
+    const courses = await axios
+        .get('/Courses')
+        .then((res) => res.data);
+    return courses.map(c => c.title).filter(onlyUnique);
 }

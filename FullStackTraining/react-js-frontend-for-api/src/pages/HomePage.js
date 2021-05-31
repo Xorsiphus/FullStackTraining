@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import AsyncSelect from 'react-select/async';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Student from '../components/Student';
 import {
   getStudents,
-  getCourses
+  getUniqueCourses
 } from '../api/apiRequests';
 import cart from "../components/Cart";
 
 import {
   Container,
+  CardColumns,
   Col,
   Row
 } from 'react-bootstrap';
@@ -18,19 +20,26 @@ import {
 const HomePage = () => {
 
   const [students, setStudents] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
 
   useEffect(() => {
     async function getData() {
       const s = await getStudents();
       setStudents(s);
-    }
+    };
     getData();
   }, []);
 
   const addStudentToCart = async (student) => {
-    cart.dispatch({ type: "Add", student });
-    const s = await getCourses();
-    console.log(s);
+    await cart.dispatch(
+      {
+        type: "Add",
+        student:
+        {
+          ...student,
+          id: cart.getState().length
+        }
+      });
   }
 
   const studentsList = students.map((s) => (
@@ -41,26 +50,54 @@ const HomePage = () => {
     />
   ));
 
+  const coursesDropdownList = (inputValue, callback) => {
+    async function getData() {
+      const courses = await getUniqueCourses();
+      var options = courses.map(c => ({ value: c, label: c }));
+      callback(options);
+    };
+    getData();
+  };
+
+  const selectSubscribe = async (props) => {
+    const s = await getStudents();
+    if (props) {
+      // props.value;
+    }
+    else {
+      setStudents(s);
+    }
+    console.log(props);
+  };
+
   return (
     <Container>
-      <Row>
-        <Col xs={10}>
-          <div className="mt-3">
+      <Row className="mt-3">
+        <Col xs={4} >
+          <div>
             <h1 className="header">All students:</h1>
           </div>
         </Col>
+        <Col xs={3}>
+          <AsyncSelect
+            isClearable={true}
+            cacheOptions
+            defaultOptions
+            loadOptions={coursesDropdownList}
+            onChange={selectSubscribe}
+          />
+        </Col>
+        <Col xs={3} />
         <Col xs={2}>
-          <div className="mt-2">
-            <Link to="/Cart" className="btn btn-success mt-3">Cart</Link>
+          <div>
+            <Link to="/Cart" className="btn btn-success mt-1">Cart</Link>
           </div>
         </Col>
-
       </Row>
       <hr />
-      <Row>
+      <CardColumns>
         {studentsList}
-      </Row>
-
+      </CardColumns>
     </Container>
   )
 };
