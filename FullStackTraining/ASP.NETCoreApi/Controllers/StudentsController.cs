@@ -53,9 +53,9 @@ namespace ASP.NETCoreApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Student>>> GetStudents(int course)
+        public async Task<ActionResult<IEnumerable<Student>>> GetStudents(string course)
         {
-            if (course != 0)
+            if (course != null)
             {
                 return await _studentRepository.GetStudentsByCourse(course);
             }

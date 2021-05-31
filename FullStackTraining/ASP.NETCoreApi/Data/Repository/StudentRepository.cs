@@ -16,8 +16,8 @@ namespace ASP.NETCoreApi.Data.Repository
         public StudentRepository(AppDbContext context) =>
             _context = context;
 
-        public async Task<ActionResult<IEnumerable<Student>>> GetStudentsByCourse(int inputCourse) =>
-            await _context.Courses.Where(c => c.CourseId == inputCourse)
+        public async Task<ActionResult<IEnumerable<Student>>> GetStudentsByCourse(string inputCourse) =>
+            await _context.Courses.Where(c => c.Title == inputCourse)
                 .Join(
                     _context.Enrollments,
                     course => course.CourseId,

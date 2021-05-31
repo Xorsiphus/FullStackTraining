@@ -53,7 +53,7 @@ const HomePage = () => {
   const coursesDropdownList = (inputValue, callback) => {
     async function getData() {
       const courses = await getUniqueCourses();
-      var options = courses.map(c => ({ value: c.id, label: c.title + " - " + c.id }));
+      var options = courses.map(c => ({ value: c, label: c }));
       callback(options);
     };
     getData();

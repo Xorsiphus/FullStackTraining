@@ -9,7 +9,7 @@ namespace ASP.NETCoreApi.Data.DAO
     {
         public Task<ActionResult<IEnumerable<Student>>> GetStudents();
         
-        public Task<ActionResult<IEnumerable<Student>>> GetStudentsByCourse(int inputCourse);
+        public Task<ActionResult<IEnumerable<Student>>> GetStudentsByCourse(string inputCourse);
         
         public Task<ActionResult<Student>> GetStudentById(int id);
 
