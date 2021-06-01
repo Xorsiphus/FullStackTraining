@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FirstApp", "FirstApp\FirstA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASP.NETCoreApi", "ASP.NETCoreApi\ASP.NETCoreApi.csproj", "{D5F92887-36B6-4BCB-8973-4223C0D9EA88}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullstackChat", "FullstackChat\FullstackChat.csproj", "{778BE56A-7786-4EA5-B548-379ED3E0DA71}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{D5F92887-36B6-4BCB-8973-4223C0D9EA88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5F92887-36B6-4BCB-8973-4223C0D9EA88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5F92887-36B6-4BCB-8973-4223C0D9EA88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{778BE56A-7786-4EA5-B548-379ED3E0DA71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{778BE56A-7786-4EA5-B548-379ED3E0DA71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{778BE56A-7786-4EA5-B548-379ED3E0DA71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{778BE56A-7786-4EA5-B548-379ED3E0DA71}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

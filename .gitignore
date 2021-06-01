@@ -2,6 +2,11 @@
 
 /FullStackTraining/.idea/
 
+/FullStackTraining/FullstackChat/bin
+/FullStackTraining/FullstackChat/obj
+/FullStackTraining/FullstackChat/ClientApp/node_modules
+
+
 /FullStackTraining/react-js-frontend-for-api/node_modules
 
 /FullStackTraining/ASP.NETCoreApi/bin/
