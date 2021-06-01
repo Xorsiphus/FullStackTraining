@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FullstackChat.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210601102753_update")]
-    partial class update
+    [Migration("20210601105848_init2")]
+    partial class init2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -120,8 +120,10 @@ namespace FullstackChat.Data.Migrations
 
             modelBuilder.Entity("FullstackChat.Models.Message", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("ChatId")
                         .HasColumnType("integer");

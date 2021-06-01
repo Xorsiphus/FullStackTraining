@@ -1,5 +1,4 @@
 ﻿import React from 'react';
-import connection from "./web-socket/WebsocketClient";
 
 // import {
 //     Container,
@@ -7,18 +6,15 @@ import connection from "./web-socket/WebsocketClient";
 //     Row
 // } from 'reactstrap';
 
-const Chat = ({title}) => {
+const Chat = ({ title, chatId, switcher }) => {
     
     const selectChat = () => {
-        console.log(title);
-        connection.invoke("ClientServerMessage", "qwe", "sss" ).catch(function (err) {
-            return console.error(err.toString());
-        });
+        switcher(chatId);
     };
 
     return (
         <div 
-            className="mb-3" 
+            className="m-3" 
             style={{
                 border: "1px solid grey", 
                 borderRadius: 25, 

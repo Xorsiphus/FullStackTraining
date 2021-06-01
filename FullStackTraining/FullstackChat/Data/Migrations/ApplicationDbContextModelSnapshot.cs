@@ -118,8 +118,10 @@ namespace FullstackChat.Data.Migrations
 
             modelBuilder.Entity("FullstackChat.Models.Message", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("ChatId")
                         .HasColumnType("integer");

@@ -32,6 +32,9 @@ namespace FullstackChat.Controllers
                 return await _repository.GetChatRoomsByUserId(id);
             }
         }
-            
+
+        [HttpPost]
+        public async Task<ActionResult<int>> AddMessage(ChatRoom newChat) =>
+            await _repository.NewChatRoom(newChat);
     }
 }

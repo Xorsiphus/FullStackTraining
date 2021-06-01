@@ -1,6 +1,9 @@
-﻿import React, {useEffect, useState} from 'react';
+﻿import React, {Component, useEffect, useState} from 'react';
+import {getChats, getMessages, postMessage} from "./axios-client/AxiosRequests";
+import connection from "./web-socket/WebsocketClient";
+import MessageParser from "./Parsers/DateParser";
+import Message from "./Message";
 import Chat from "./Chat";
-import {getChats} from "./axios-client/AxiosRequests";
 
 import {
     Col,
@@ -11,26 +14,68 @@ import {
     Button,
     Input,
 } from 'reactstrap';
-import Message from "./Message";
 
 
-const ChatPage = (props) => {
+const ChatPage = () => {
 
     const [chats, setChats] = useState([]);
+    const [currentChatId, setCurrentChatId] = useState(0);
     const [userData, setUserData] = useState(null);
     const [messages, setMessages] = useState([]);
+    const [messageText, setMessageText] = useState("");
+    const [chatName, setChatName] = useState("");
+    const [flag, setFlag] = useState(true);
 
-    useEffect(() => {
-        async function getData(storage) {
-            return await getChats(storage);
-        }
+    async function Chats(storage) {
+        const chats = await getChats(storage);
+        setChats(chats);
+        return chats;
+    }
 
+    async function Messages(storage, chatId) {
+        const m = await getMessages(storage, chatId);
+        setMessages(m);
+        return m;
+    }
+
+    useEffect(() => {        
         const userStorage = JSON
             .parse(localStorage.getItem("FullstackChatuser:https://localhost:5001:FullstackChat"));
-        getData(userStorage).then(r => setChats(r));
+        // localStorage.clear();
         setUserData(userStorage);
-        // console.log(props);
+
+        Chats(userStorage).then((c) => {
+            setCurrentChatId(c[0].chatId || 0);
+            Messages(userStorage, c[0].chatId || 0).then();
+        });
     }, []);
+
+    const sendMessage = async () => {
+        if (flag){
+            connection.on("NewMessage", (message) => {
+                const m = MessageParser(message);
+                setMessages([...messages, m]);
+            });
+            setFlag(false);
+        }
+        
+        await postMessage({
+            chatId: currentChatId,
+            userId: userData.profile.sub,
+            userName: userData.profile.name.split('@')[0],
+            text: messageText,
+            token: userData.access_token
+        });
+
+        setMessageText("");
+    };
+
+    const changeChat = async (id) => {
+        if (id !== currentChatId){
+            setCurrentChatId(id);
+            await Messages(userData, id);
+        }
+    }
 
     return (
         <Container>
@@ -41,28 +86,38 @@ const ChatPage = (props) => {
             </Row>
             <hr/>
             <Row>
-                <Col className="col-md-4" style={{borderRight: "1px solid lightgrey"}}>
-                    <div style={{height: "90%", overflowY: "scroll", overflowX: "hidden"}}>
-                        {chats.map(c => (<Chat key={c.chatId} title={c.chatName}/>))}
-                        {chats.map(c => (<Chat key={c.chatId} title={c.chatName}/>))}
-                        {chats.map(c => (<Chat key={c.chatId} title={c.chatName}/>))}
-                        {chats.map(c => (<Chat key={c.chatId} title={c.chatName}/>))}
-                        {chats.map(c => (<Chat key={c.chatId} title={c.chatName}/>))}
-                        {chats.map(c => (<Chat key={c.chatId} title={c.chatName}/>))}
+                <Col className="col-md-4"
+                     style={{
+                         borderRight: "1px solid lightgrey",
+                         display: "flex",
+                         flexDirection: "column",
+                         alignItems: "center"
+                     }}>
+                    <Input onChange={(e) => setChatName(e.target.value)} value={chatName}
+                           placeholder="Chat Name" className="m-3"/>
+                    <Button className="mb-3" color="success" style={{width: "75%"}}>
+                        New Chat
+                    </Button>
+                    <div
+                        style={{overflowY: "scroll", width: "100%", overflowX: "hidden"}}>
+                        {chats.map(c => (
+                            <Chat key={c.chatId} chatId={c.chatId} title={c.chatName} switcher={changeChat}/>))}
                     </div>
                 </Col>
                 <Col className="col-md-8">
                     <Row>
                         <Col className="col-md-12">
-                            {messages.map(m => (<Message key={m.id} text={m.text} username={m.userId}/>))}
+                            {messages.map(m => (
+                                <Message key={m.id} text={m.text} username={m.userName} date={m.date}/>))}
                         </Col>
                     </Row>
                     <Row>
                         <Col className="col-md-12">
                             <InputGroup>
-                                <Input placeholder="Message" />
+                                <Input onChange={(e) => setMessageText(e.target.value)} value={messageText}
+                                       placeholder="Message"/>
                                 <InputGroupAddon addonType="append">
-                                    <Button color="success">Send</Button>
+                                    <Button onClick={sendMessage} color="success">Send</Button>
                                 </InputGroupAddon>
                             </InputGroup>
                         </Col>

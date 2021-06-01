@@ -32,5 +32,11 @@ namespace FullstackChat.Data.Repositories
                     c => c.ChatId,
                     (l, c) => c)
                 .ToListAsync();
+
+        public async Task<ActionResult<int>> NewChatRoom(ChatRoom newChat)
+        {
+            await _context.ChatRooms.AddAsync(newChat);
+            return await _context.SaveChangesAsync();
+        }
     }
 }

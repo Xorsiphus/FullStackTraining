@@ -9,9 +9,11 @@ namespace FullstackChat.Models
         public int LinkId { get; set; }
 
         [ForeignKey("ChatRoom")]
+        [Required]
         public int ChatId { get; set; }
 
         [ForeignKey("AspNetUsers")] 
+        [Required]
         public string UserId { get; set; }
     }
 }

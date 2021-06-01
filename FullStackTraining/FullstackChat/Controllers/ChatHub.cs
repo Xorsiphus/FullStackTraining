@@ -6,10 +6,10 @@ namespace FullstackChat.Controllers
 {
     public class ChatHub : Hub
     {
-        public async Task ClientServerMessage(string user, string message)
-        {
-            Console.WriteLine(user + message);
-            await Clients.All.SendAsync("ServerClientMessage", user, message);
-        }
+        // public async Task ClientServerMessage(string user, string message)
+        // {
+        //     Console.WriteLine(user + message);
+        //     await Clients.All.SendAsync("ServerClientMessage", user, message);
+        // }
     }
 }

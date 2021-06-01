@@ -7,6 +7,7 @@ namespace FullstackChat.Models
         [Key]
         public int ChatId { get; set; }
         
+        [Required]
         public string ChatName { get; set; }
     }
 }

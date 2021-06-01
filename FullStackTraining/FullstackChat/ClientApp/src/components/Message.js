@@ -4,12 +4,12 @@ import {
     Row
 } from 'reactstrap';
 
-const Message = ( { username, text } ) => {
+const Message = ( { username, text, date } ) => {
 
     return (
         <Row>
             <div
-                className="mb-3"
+                className="mb-3 ml-3"
                 style={{
                     border: "1px solid grey",
                     borderRadius: 25,
@@ -18,7 +18,7 @@ const Message = ( { username, text } ) => {
                     justifyContent: "center",
                 }}
             >
-                <p>Message</p>
+                <p>{date}<br/>{username}: {text}</p>
             </div>
         </Row>
         
