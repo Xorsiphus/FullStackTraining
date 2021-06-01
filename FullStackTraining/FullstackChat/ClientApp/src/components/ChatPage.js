@@ -1,37 +1,72 @@
 ﻿import React, {useEffect, useState} from 'react';
-
-import {Col, Container, Row} from 'reactstrap';
 import Chat from "./Chat";
 import {getChats} from "./axios-client/AxiosRequests";
+
+import {
+    Col,
+    Container,
+    Row,
+    InputGroup,
+    InputGroupAddon,
+    Button,
+    Input,
+} from 'reactstrap';
+import Message from "./Message";
+
 
 const ChatPage = (props) => {
 
     const [chats, setChats] = useState([]);
+    const [userData, setUserData] = useState(null);
+    const [messages, setMessages] = useState([]);
 
     useEffect(() => {
         async function getData(storage) {
             return await getChats(storage);
         }
+
         const userStorage = JSON
             .parse(localStorage.getItem("FullstackChatuser:https://localhost:5001:FullstackChat"));
         getData(userStorage).then(r => setChats(r));
+        setUserData(userStorage);
+        // console.log(props);
     }, []);
 
     return (
-        <Container className="h-100">
+        <Container>
             <Row className="mt-3">
                 <Col>
                     <h2 className="text-center">Simple Chat</h2>
                 </Col>
             </Row>
             <hr/>
-            <Row className="h-100">
-                <Col className="col-md-4 h-75" style={{borderRight: "1px solid lightgrey"}}>
-                    {chats.map(c => (<Chat key={c.chatId} title={c.chatName}/>))}
-
+            <Row>
+                <Col className="col-md-4" style={{borderRight: "1px solid lightgrey"}}>
+                    <div style={{height: "90%", overflowY: "scroll", overflowX: "hidden"}}>
+                        {chats.map(c => (<Chat key={c.chatId} title={c.chatName}/>))}
+                        {chats.map(c => (<Chat key={c.chatId} title={c.chatName}/>))}
+                        {chats.map(c => (<Chat key={c.chatId} title={c.chatName}/>))}
+                        {chats.map(c => (<Chat key={c.chatId} title={c.chatName}/>))}
+                        {chats.map(c => (<Chat key={c.chatId} title={c.chatName}/>))}
+                        {chats.map(c => (<Chat key={c.chatId} title={c.chatName}/>))}
+                    </div>
                 </Col>
                 <Col className="col-md-8">
-                    <p>Test2</p>
+                    <Row>
+                        <Col className="col-md-12">
+                            {messages.map(m => (<Message key={m.id} text={m.text} username={m.userId}/>))}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="col-md-12">
+                            <InputGroup>
+                                <Input placeholder="Message" />
+                                <InputGroupAddon addonType="append">
+                                    <Button color="success">Send</Button>
+                                </InputGroupAddon>
+                            </InputGroup>
+                        </Col>
+                    </Row>
                 </Col>
             </Row>
         </Container>

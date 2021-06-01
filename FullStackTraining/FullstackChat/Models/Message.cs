@@ -13,7 +13,9 @@ namespace FullstackChat.Models
         public int ChatId { get; set; }
 
         [ForeignKey("AspNetUsers")] 
-        public int UserId { get; set; }
+        public string UserId { get; set; }
+        
+        public string UserName { get; set; }
         
         public string Text { get; set; }
         

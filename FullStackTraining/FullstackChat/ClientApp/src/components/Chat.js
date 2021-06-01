@@ -1,4 +1,5 @@
 ﻿import React from 'react';
+import connection from "./web-socket/WebsocketClient";
 
 // import {
 //     Container,
@@ -10,15 +11,24 @@ const Chat = ({title}) => {
     
     const selectChat = () => {
         console.log(title);
+        connection.invoke("ClientServerMessage", "qwe", "sss" ).catch(function (err) {
+            return console.error(err.toString());
+        });
     };
 
     return (
         <div 
             className="mb-3" 
-            style={{border: "1px solid grey", borderRadius: 20, padding: 15}}
+            style={{
+                border: "1px solid grey", 
+                borderRadius: 25, 
+                padding: 10, 
+                display: "flex", 
+                justifyContent: "center",
+            }}
             onClick={selectChat}
         >
-            <font color="black">{title}</font>
+            <p>{title}</p>
         </div>
     );
 }
