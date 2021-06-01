@@ -1,5 +1,5 @@
-﻿import React, {Component, useEffect, useState} from 'react';
-import {getChats, getMessages, postMessage} from "./axios-client/AxiosRequests";
+﻿import React, {useEffect, useState} from 'react';
+import {createChat, getChats, getMessages, postChat, postMessage} from "./axios-client/AxiosRequests";
 import connection from "./web-socket/WebsocketClient";
 import MessageParser from "./Parsers/DateParser";
 import Message from "./Message";
@@ -33,10 +33,19 @@ const ChatPage = () => {
     }
 
     async function Messages(storage, chatId) {
-        const m = await getMessages(storage, chatId);
+        const m = await getMessages(chatId, storage);
         setMessages(m);
         return m;
     }
+    
+    const configureWS = () => {
+        connection.on("NewMessage", (message) => {
+            const m = MessageParser(message);
+            setMessages([...messages, m]);
+        });
+        
+        setFlag(false);  
+    };
 
     useEffect(() => {        
         const userStorage = JSON
@@ -52,11 +61,7 @@ const ChatPage = () => {
 
     const sendMessage = async () => {
         if (flag){
-            connection.on("NewMessage", (message) => {
-                const m = MessageParser(message);
-                setMessages([...messages, m]);
-            });
-            setFlag(false);
+            configureWS();
         }
         
         await postMessage({
@@ -74,6 +79,13 @@ const ChatPage = () => {
         if (id !== currentChatId){
             setCurrentChatId(id);
             await Messages(userData, id);
+        }
+    }
+    
+    const createChat = async () => {
+        if (chatName !== ""){
+            await postChat(chatName, userData.profile.sub, userData.access_token);
+            await Chats(userData);
         }
     }
 
@@ -95,7 +107,7 @@ const ChatPage = () => {
                      }}>
                     <Input onChange={(e) => setChatName(e.target.value)} value={chatName}
                            placeholder="Chat Name" className="m-3"/>
-                    <Button className="mb-3" color="success" style={{width: "75%"}}>
+                    <Button className="mb-3" color="success" style={{width: "75%"}} onClick={createChat}>
                         New Chat
                     </Button>
                     <div

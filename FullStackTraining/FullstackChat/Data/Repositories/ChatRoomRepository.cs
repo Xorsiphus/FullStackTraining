@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FullstackChat.Data.DAO;
@@ -14,13 +15,15 @@ namespace FullstackChat.Data.Repositories
 
         public ChatRoomRepository(ApplicationDbContext context) =>
             _context = context;
-        
+
         public async Task<ActionResult<IEnumerable<ChatRoom>>> GetChatRooms() =>
             await _context.ChatRooms.ToListAsync();
 
-        public async Task<ActionResult<IEnumerable<ChatRoom>>> GetChatRoomsByUserId(string id) =>
-            await _context.ApplicationUsers
-                .Where(u => u.Id == id)
+        public async Task<ActionResult<IEnumerable<ChatRoom>>> GetChatRoomsByUserId(string userId)
+        {
+            Console.WriteLine(userId);
+            return await _context.ApplicationUsers
+                .Where(u => u.Id == userId)
                 .Join(
                     _context.ChatUserLinkers,
                     u => u.Id,
@@ -32,10 +35,16 @@ namespace FullstackChat.Data.Repositories
                     c => c.ChatId,
                     (l, c) => c)
                 .ToListAsync();
+        }
+            
 
-        public async Task<ActionResult<int>> NewChatRoom(ChatRoom newChat)
+        public async Task<ActionResult<int>> NewChatRoom(ChatTransfer transfer)
         {
-            await _context.ChatRooms.AddAsync(newChat);
+            var i = await _context.ChatRooms.CountAsync();
+            await _context.ChatRooms.AddAsync(new ChatRoom {ChatName = transfer.ChatName, ChatId = i + 1});
+            
+            await _context.ChatUserLinkers.AddAsync(new ChatUserLinker
+                {UserId = transfer.UserId, ChatId = i + 1});
             return await _context.SaveChangesAsync();
         }
     }

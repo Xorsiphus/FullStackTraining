@@ -12,15 +12,15 @@ export async function getChats(storage) {
         .then((res) => res.data);
 }
 
-export async function createChat( { title, token } ) {
+export async function postChat(chatName, userId, token) {
     await axios
-        .post('/ChatsList', { title },
+        .post('/ChatsList', { ChatName: chatName, UserId: userId },
             {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 }
 
-export async function getMessages(storage, chatId) {
+export async function getMessages(chatId, storage) {
     return await axios
         .get('/Messages',
             {

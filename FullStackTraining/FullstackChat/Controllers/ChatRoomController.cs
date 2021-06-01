@@ -21,20 +21,23 @@ namespace FullstackChat.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ChatRoom>>> GetChatRoomsWithId(string id)
+        public async Task<ActionResult<IEnumerable<ChatRoom>>> GetChatRoomsWithId(string userId)
         {
-            if (id == null)
+            if (userId == null)
             {
                 return await _repository.GetChatRooms();
             }
             else
             {
-                return await _repository.GetChatRoomsByUserId(id);
+                return await _repository.GetChatRoomsByUserId(userId);
             }
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> AddMessage(ChatRoom newChat) =>
-            await _repository.NewChatRoom(newChat);
+        public async Task<ActionResult<int>> AddMessage(ChatTransfer transfer)
+        {
+            return await _repository.NewChatRoom(transfer);
+        }
+            
     }
 }

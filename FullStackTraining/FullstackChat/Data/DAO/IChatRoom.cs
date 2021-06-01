@@ -11,6 +11,6 @@ namespace FullstackChat.Data.DAO
 
         public Task<ActionResult<IEnumerable<ChatRoom>>> GetChatRoomsByUserId(string id);
         
-        public Task<ActionResult<int>> NewChatRoom(ChatRoom newChat);
+        public Task<ActionResult<int>> NewChatRoom(ChatTransfer transfer);
     }
 }
