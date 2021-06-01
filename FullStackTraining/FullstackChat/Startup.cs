@@ -28,6 +28,7 @@ namespace FullstackChat
         {
             services.AddTransient<IChatRoom, ChatRoomRepository>();
             services.AddTransient<IMessage, MessageRepository>();
+            services.AddTransient<IChatUserLinker, ChatUserLinkerRepository>();
             
             services.AddSignalR();
             

@@ -1,5 +1,5 @@
 ﻿import React, {useEffect, useState} from 'react';
-import {createChat, getChats, getMessages, postChat, postMessage} from "./axios-client/AxiosRequests";
+import {getChats, getMessages, postChat, postLink, postMessage} from "./axios-client/AxiosRequests";
 import connection from "./web-socket/WebsocketClient";
 import MessageParser from "./Parsers/DateParser";
 import Message from "./Message";
@@ -25,6 +25,7 @@ const ChatPage = () => {
     const [messageText, setMessageText] = useState("");
     const [chatName, setChatName] = useState("");
     const [flag, setFlag] = useState(true);
+    const [addUser, setAddUser] = useState("");
 
     async function Chats(storage) {
         const chats = await getChats(storage);
@@ -37,33 +38,37 @@ const ChatPage = () => {
         setMessages(m);
         return m;
     }
-    
+
     const configureWS = () => {
         connection.on("NewMessage", (message) => {
             const m = MessageParser(message);
             setMessages([...messages, m]);
         });
-        
-        setFlag(false);  
+
+        setFlag(false);
     };
 
-    useEffect(() => {        
+    useEffect(() => {
         const userStorage = JSON
             .parse(localStorage.getItem("FullstackChatuser:https://localhost:5001:FullstackChat"));
         // localStorage.clear();
         setUserData(userStorage);
 
         Chats(userStorage).then((c) => {
-            setCurrentChatId(c[0].chatId || 0);
+            if (c[0])
+                setCurrentChatId(c[0].chatId);
+            else
+                return;
+            
             Messages(userStorage, c[0].chatId || 0).then();
         });
     }, []);
 
     const sendMessage = async () => {
-        if (flag){
+        if (flag) {
             configureWS();
         }
-        
+
         await postMessage({
             chatId: currentChatId,
             userId: userData.profile.sub,
@@ -76,18 +81,23 @@ const ChatPage = () => {
     };
 
     const changeChat = async (id) => {
-        if (id !== currentChatId){
+        if (id !== currentChatId) {
             setCurrentChatId(id);
             await Messages(userData, id);
         }
     }
-    
+
     const createChat = async () => {
-        if (chatName !== ""){
+        if (chatName !== "") {
             await postChat(chatName, userData.profile.sub, userData.access_token);
             await Chats(userData);
         }
     }
+
+    const addUserRequest = async (chatId) => {
+        await postLink(chatId, addUser, userData.access_token);
+        setAddUser("");
+    };
 
     return (
         <Container>
@@ -113,7 +123,8 @@ const ChatPage = () => {
                     <div
                         style={{overflowY: "scroll", width: "100%", overflowX: "hidden"}}>
                         {chats.map(c => (
-                            <Chat key={c.chatId} chatId={c.chatId} title={c.chatName} switcher={changeChat}/>))}
+                            <Chat key={c.chatId} func={addUserRequest} addUser={addUser} setAddUser={setAddUser} chatId={c.chatId}
+                                  title={c.chatName} switcher={changeChat}/>))}
                     </div>
                 </Col>
                 <Col className="col-md-8">
