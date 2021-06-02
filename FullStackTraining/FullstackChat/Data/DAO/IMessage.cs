@@ -8,7 +8,7 @@ namespace FullstackChat.Data.DAO
 {
     public interface IMessage
     {
-         public Task<ActionResult<IEnumerable<Message>>> GetMessagesByUserAndChatId(string userId, int chatId);
+         public Task<ActionResult<IEnumerable<Message>>> GetMessagesByChatId(int chatId);
          
          public Task<ActionResult<int>> AddMessage(Message message);
     }

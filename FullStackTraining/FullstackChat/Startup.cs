@@ -8,6 +8,7 @@ using FullstackChat.Data;
 using FullstackChat.Data.DAO;
 using FullstackChat.Data.Repositories;
 using FullstackChat.Models;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -29,13 +30,15 @@ namespace FullstackChat
             services.AddTransient<IChatRoom, ChatRoomRepository>();
             services.AddTransient<IMessage, MessageRepository>();
             services.AddTransient<IChatUserLinker, ChatUserLinkerRepository>();
-            
-            services.AddSignalR();
+            services.AddTransient<IWsUserSession, WsUserSessionRepository>();
             
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(
                     Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddSignalR();
+            // services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
+            
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -79,6 +82,7 @@ namespace FullstackChat
             app.UseAuthentication();
             app.UseIdentityServer();
             app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<ChatHub>("/chatHub");

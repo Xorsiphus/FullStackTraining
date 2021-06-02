@@ -26,7 +26,7 @@ const Chat = ({ title, chatId, switcher, addUser, setAddUser, func }) => {
             <Input onChange={(e) => setAddUser(e.target.value)} value={addUser}
                    style={{width: "80%"}}
                    placeholder="User Email" className="m-3"/>
-            <Button className="mb-3" color="success" style={{width: "75%"}} onClick={() => func(chatId)}>
+            <Button className="mb-3" color="success" style={{width: "75%"}} onClick={() => func(chatId, title)}>
                 Invite User
             </Button>
         </div>

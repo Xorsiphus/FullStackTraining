@@ -1,4 +1,4 @@
-﻿namespace FullstackChat.Models
+﻿namespace FullstackChat.Models.Transfers
 {
     public class ChatTransfer
     {

@@ -6,6 +6,12 @@ namespace FullstackChat.Controllers
 {
     public class ChatHub : Hub
     {
+        // public override Task OnConnectedAsync()
+        // {
+        //     
+        //     return base.OnConnectedAsync();
+        // }
+        
         // public async Task ClientServerMessage(string user, string message)
         // {
         //     Console.WriteLine(user + message);

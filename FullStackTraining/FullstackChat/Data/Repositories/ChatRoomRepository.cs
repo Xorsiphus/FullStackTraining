@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FullstackChat.Data.DAO;
 using FullstackChat.Models;
+using FullstackChat.Models.Transfers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

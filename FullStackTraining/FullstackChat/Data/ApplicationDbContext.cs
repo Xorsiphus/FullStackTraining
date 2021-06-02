@@ -18,6 +18,7 @@ namespace FullstackChat.Data
         public DbSet<Message> Messages { get; set; }
         public DbSet<ChatUserLinker> ChatUserLinkers { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<WsUserSession> WsUserSessions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

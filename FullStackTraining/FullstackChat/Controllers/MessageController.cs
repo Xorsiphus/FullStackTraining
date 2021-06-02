@@ -25,8 +25,8 @@ namespace FullstackChat.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Message>>> GetMessagesByUserAndChatId(string userId, int chatId) =>
-            await _repository.GetMessagesByUserAndChatId(userId, chatId);
+        public async Task<ActionResult<IEnumerable<Message>>> GetMessagesByChatId(int chatId) =>
+            await _repository.GetMessagesByChatId(chatId);
 
 
         [HttpPost]

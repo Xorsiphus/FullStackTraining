@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using FullstackChat.Data;
 using FullstackChat.Data.Repositories;
 using FullstackChat.Models;
+using FullstackChat.Models.Transfers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,7 +35,7 @@ namespace FullstackChat.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> AddMessage(ChatTransfer transfer)
+        public async Task<ActionResult<int>> AddChatRoom(ChatTransfer transfer)
         {
             return await _repository.NewChatRoom(transfer);
         }

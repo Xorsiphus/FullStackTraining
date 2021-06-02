@@ -17,8 +17,8 @@ namespace FullstackChat.Data.Repositories
             _context = context;
 
 
-        public async Task<ActionResult<IEnumerable<Message>>> GetMessagesByUserAndChatId(string userId, int chatId) =>
-            await _context.Messages.Where(m => m.UserId == userId && m.ChatId == chatId).ToListAsync();
+        public async Task<ActionResult<IEnumerable<Message>>> GetMessagesByChatId(int chatId) =>
+            await _context.Messages.Where(m => m.ChatId == chatId).ToListAsync();
 
         public async Task<ActionResult<int>> AddMessage(Message message)
         {

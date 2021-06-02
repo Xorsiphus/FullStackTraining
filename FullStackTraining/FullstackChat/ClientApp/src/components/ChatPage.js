@@ -1,25 +1,19 @@
 ﻿import React, {useEffect, useState} from 'react';
+import {NotificationContainer} from 'react-notifications';
 import {getChats, getMessages, postChat, postLink, postMessage} from "./axios-client/AxiosRequests";
 import connection from "./web-socket/WebsocketClient";
-import MessageParser from "./Parsers/DateParser";
 import Message from "./Message";
 import Chat from "./Chat";
 
-import {
-    Col,
-    Container,
-    Row,
-    InputGroup,
-    InputGroupAddon,
-    Button,
-    Input,
-} from 'reactstrap';
+import {Button, Col, Container, Input, InputGroup, InputGroupAddon, Row,} from 'reactstrap';
+import 'react-notifications/lib/notifications.css';
 
 
 const ChatPage = () => {
 
     const [chats, setChats] = useState([]);
     const [currentChatId, setCurrentChatId] = useState(0);
+    const [currentChatName, setCurrentChatName] = useState("");
     const [userData, setUserData] = useState(null);
     const [messages, setMessages] = useState([]);
     const [messageText, setMessageText] = useState("");
@@ -38,37 +32,52 @@ const ChatPage = () => {
         setMessages(m);
         return m;
     }
+    
+    const getMes = () => messages;
 
-    const configureWS = () => {
-        connection.on("NewMessage", (message) => {
-            const m = MessageParser(message);
-            setMessages([...messages, m]);
+    const updateMessages = (newMess, getter = getMes()) => {
+        console.log(newMess.chatId, currentChatId);
+        if (newMess.chatId === currentChatId) {
+            const mm = [...getter, newMess];
+            setMessages(mm);
+        }
+    }
+
+    const configureWS = () => {        
+        connection.on("NewMessage", updateMessages);
+
+        connection.on("ChatInvite", (chatNotify) => {
+            const [lUserName, lChatName] = chatNotify.split(";");
+            console.log(lUserName, lChatName);
+            // NotificationManager.success(userName, " invited you to ", chatName, 'Chat invite');
+            setTimeout(() => Chats(userData).then(), 1000);
+        });
+
+        connection.start().then().catch((err) => {
+            return console.error(err.toString());
         });
 
         setFlag(false);
-    };
+    };  
 
-    useEffect(() => {
+    useEffect(() => {        
         const userStorage = JSON
             .parse(localStorage.getItem("FullstackChatuser:https://localhost:5001:FullstackChat"));
         // localStorage.clear();
         setUserData(userStorage);
 
         Chats(userStorage).then((c) => {
-            if (c[0])
+            if (c[0] && currentChatId === 0) {
                 setCurrentChatId(c[0].chatId);
-            else
+                setCurrentChatName(c[0].chatName);
+            } else
                 return;
-            
-            Messages(userStorage, c[0].chatId || 0).then();
+
+            Messages(userStorage, c[0].chatId).then();
         });
     }, []);
 
     const sendMessage = async () => {
-        if (flag) {
-            configureWS();
-        }
-
         await postMessage({
             chatId: currentChatId,
             userId: userData.profile.sub,
@@ -81,21 +90,26 @@ const ChatPage = () => {
     };
 
     const changeChat = async (id) => {
+        if (flag) {
+            configureWS();
+        }
+        
         if (id !== currentChatId) {
-            setCurrentChatId(id);
+            await setCurrentChatId(id);
+            await setCurrentChatName(chats.find(c => c.chatId === id).chatName);
             await Messages(userData, id);
         }
     }
 
-    const createChat = async () => {
+    const createChat = async () => {        
         if (chatName !== "") {
             await postChat(chatName, userData.profile.sub, userData.access_token);
             await Chats(userData);
         }
     }
 
-    const addUserRequest = async (chatId) => {
-        await postLink(chatId, addUser, userData.access_token);
+    const addUserRequest = async (chatId, chatName) => {
+        await postLink(chatId, chatName, addUser, userData.profile.name, userData.access_token);
         setAddUser("");
     };
 
@@ -123,11 +137,16 @@ const ChatPage = () => {
                     <div
                         style={{overflowY: "scroll", width: "100%", overflowX: "hidden"}}>
                         {chats.map(c => (
-                            <Chat key={c.chatId} func={addUserRequest} addUser={addUser} setAddUser={setAddUser} chatId={c.chatId}
+                            <Chat key={c.chatId} func={addUserRequest} addUser={addUser} setAddUser={setAddUser}
+                                  chatId={c.chatId}
                                   title={c.chatName} switcher={changeChat}/>))}
                     </div>
                 </Col>
                 <Col className="col-md-8">
+                    <Row>
+                        <h3 className="m-3">{currentChatName}</h3>
+                    </Row>
+                    <hr/>
                     <Row>
                         <Col className="col-md-12">
                             {messages.map(m => (
@@ -147,6 +166,8 @@ const ChatPage = () => {
                     </Row>
                 </Col>
             </Row>
+
+            <NotificationContainer/>
         </Container>
     );
 }

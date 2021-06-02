@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using FullstackChat.Models;
+using FullstackChat.Models.Transfers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FullstackChat.Data.DAO
