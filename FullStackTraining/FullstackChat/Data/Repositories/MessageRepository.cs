@@ -25,5 +25,8 @@ namespace FullstackChat.Data.Repositories
             await _context.Messages.AddAsync(message);
             return await _context.SaveChangesAsync();
         }
+
+        public async Task<int> CountOfMessages() =>
+            await _context.Messages.CountAsync();
     }
 }

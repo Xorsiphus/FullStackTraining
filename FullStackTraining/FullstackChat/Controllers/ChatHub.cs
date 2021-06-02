@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
+using FullstackChat.Data;
+using FullstackChat.Data.Repositories;
 using Microsoft.AspNetCore.SignalR;
 
 namespace FullstackChat.Controllers
@@ -8,14 +10,14 @@ namespace FullstackChat.Controllers
     {
         // public override Task OnConnectedAsync()
         // {
-        //     
+        //     Console.WriteLine(Context.User);
         //     return base.OnConnectedAsync();
         // }
         
-        // public async Task ClientServerMessage(string user, string message)
+        // public async Task LinkerClient(string senderName, string chatName)
         // {
-        //     Console.WriteLine(user + message);
-        //     await Clients.All.SendAsync("ServerClientMessage", user, message);
+        //     Console.WriteLine(senderName + chatName + Context.ConnectionId);
+        //     // await Clients.All.SendAsync("ServerClientMessage", senderName, chatName);
         // }
     }
 }

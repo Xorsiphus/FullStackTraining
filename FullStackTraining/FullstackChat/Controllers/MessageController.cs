@@ -32,7 +32,9 @@ namespace FullstackChat.Controllers
         [HttpPost]
         public async Task<ActionResult<int>> AddMessage(Message message)
         {
+            var id = await _repository.CountOfMessages();
             message.Date = DateTime.Now;
+            message.Id = id;
             await _hub.Clients.All.SendAsync("NewMessage", message);
             return await _repository.AddMessage(message);
         }

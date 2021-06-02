@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using FullstackChat.Data;
 using FullstackChat.Data.Repositories;
 using FullstackChat.Models.Transfers;
@@ -26,8 +27,10 @@ namespace FullstackChat.Controllers
         public async Task<ActionResult<int>> AddNewLink(LinkTransfer transfer)
         {
             var user = await _repository.GetUserByUsername(transfer.UserName);
+            Console.WriteLine(user.Id);
             // await _hub.Clients.User(user.Id).SendAsync("ChatInvite", transfer.SenderName + ";" + transfer.ChatName);
-            await _hub.Clients.All.SendAsync("ChatInvite", transfer.SenderName + ";" + transfer.ChatName);
+            await _hub.Clients.All.SendAsync("ChatInvite",
+                transfer.SenderName, transfer.ChatName, user.Id);
             return await _repository.NewChatUserLink(transfer);
         }
     }

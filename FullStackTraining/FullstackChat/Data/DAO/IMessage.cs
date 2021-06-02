@@ -11,5 +11,7 @@ namespace FullstackChat.Data.DAO
          public Task<ActionResult<IEnumerable<Message>>> GetMessagesByChatId(int chatId);
          
          public Task<ActionResult<int>> AddMessage(Message message);
+
+         public Task<int> CountOfMessages();
     }
 }

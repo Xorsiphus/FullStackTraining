@@ -8,7 +8,6 @@ using FullstackChat.Data;
 using FullstackChat.Data.DAO;
 using FullstackChat.Data.Repositories;
 using FullstackChat.Models;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

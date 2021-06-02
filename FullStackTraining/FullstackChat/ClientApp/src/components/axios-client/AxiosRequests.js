@@ -1,5 +1,5 @@
 ﻿import axios from "./AxiosClient";
-import MessageParser from "../Parsers/DateParser";
+import MessageParser from "../Parsers/MessageParser";
 
 
 export async function getChats(storage) {

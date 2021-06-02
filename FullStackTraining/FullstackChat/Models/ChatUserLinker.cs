@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FullstackChat.Models
 {
-    [Index(nameof(ChatId), nameof(UserId))]
+    [Index(nameof(ChatId), nameof(UserId), IsUnique = true)]
     public class ChatUserLinker
     {
         [Key] 
